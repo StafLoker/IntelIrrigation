@@ -17,7 +17,7 @@ public:
   void calculateWorkPeriod(uint16_t);
 
   uint16_t getPower() const;
-  
+
   uint32_t getWorkPeriod() const;
 
   void doWorkDuringWorkPeriod();
