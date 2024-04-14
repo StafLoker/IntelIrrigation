@@ -70,14 +70,14 @@ void setupConfigurationPages() {
       if (encoder.hold()) {
         if (step == 4) {
           // Mode selection
-          if (selector) {
+          if (!selector) {
             step = 0;
             configuration.autoMode = true;
           } else {
             step++;
             configuration.autoMode = false;
+            selector = 1;
           }
-          selector = 1;
         } else if (step == 1 && selector == SELECT_RANGE_POWER) {
           // Button "Range"
           step++;
@@ -97,7 +97,7 @@ void setupConfigurationPages() {
               break;
             case 5: step = 0;
           }
-          selector = 1;
+          step == 4 ? selector = 0 : selector = 1;
         }
       }
 
@@ -148,7 +148,7 @@ void controlEnterPower() {
 
 void controlEnterPowerRange() {
   if (selector && encoder.turn()) {
-    !selector ? minPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir() : maxPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir();
+    selector == SELECT_MIN_POWER ? minPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir() : maxPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir();
     if (maxPowerValue > MAX_POWER) {
       maxPowerValue = 0;
     }
@@ -191,24 +191,24 @@ void controlEnterSchedule() {
   if (selector && encoder.turn()) {
     switch (selector) {
       case SELECT_DAYS_SCHEDULE:
-        configuration.schedule[2] += (encoder.pressing() ? 5 : 1) * encoder.dir();
-        if (configuration.schedule[2] > MAX_DAYS_SCHEDULE) {
-          configuration.schedule[2] = 0;
-        }
+        configuration.schedule[0] += (encoder.pressing() ? 5 : 1) * encoder.dir();
         break;
       case SELECT_HOURS_SCHEDULE:
         configuration.schedule[1] += (encoder.pressing() ? 5 : 1) * encoder.dir();
-        if (configuration.schedule[1] > MAX_HOURS_SCHEDULE) {
-          configuration.schedule[1] = 0;
-          configuration.schedule[2]++;
-        }
         break;
       case SELECT_MINS_SCHEDULE:
-        configuration.schedule[0] += (encoder.pressing() ? 5 : 1) * encoder.dir();
-        if (configuration.schedule[0] > MAX_MINS_SCHEDULE) {
-          configuration.schedule[0] = 0;
-          configuration.schedule[1]++;
-        }
+        configuration.schedule[2] += (encoder.pressing() ? 5 : 1) * encoder.dir();
+    }
+    if (configuration.schedule[0] > MAX_DAYS_SCHEDULE) {
+      configuration.schedule[0] = 0;
+    }
+    if (configuration.schedule[1] > MAX_HOURS_SCHEDULE) {
+      configuration.schedule[1] = 0;
+      configuration.schedule[0]++;
+    }
+    if (configuration.schedule[2] > MAX_MINS_SCHEDULE) {
+      configuration.schedule[2] = 0;
+      configuration.schedule[1]++;
     }
   }
 
