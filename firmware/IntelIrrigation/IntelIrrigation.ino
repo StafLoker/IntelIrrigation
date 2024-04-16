@@ -23,7 +23,16 @@
   - In Setting add new screen that allows to set the screen contrast.
   - Before installing the firmware on the board you can specify in which language you prefer the interface. Possible languages: English, Spanish. Default: English.
 */
- 
+
+//////////////////////////
+// Library optimisation //
+//////////////////////////
+
+// EncButton.h
+
+#define EB_NO_FOR       // отключить поддержку pressFor/holdFor/stepFor и счётчик степов (экономит 2 байта оперативки)
+#define EB_NO_CALLBACK  // отключить обработчик событий attach (экономит 2 байта оперативки)
+
 ///////////////
 // Libraries //
 ///////////////
@@ -31,10 +40,11 @@
 // Native
 #include <stdint.h>
 #include <Wire.h>
+#include <EEPROM.h>
 // Outside
-#include <U8g2lib.h>
-#include <EncButton.h>
-#include <GyverPower.h>
+#include <U8g2lib.h>     // Version: 2.34.22
+#include <EncButton.h>   // Version: 3.5.4
+#include <GyverPower.h>  // Version: 2.2
 // Personal
 #include "global.h"
 #include "controller.h"
@@ -58,18 +68,27 @@ CONFIGURATION configuration;
 //////////
 
 void setup() {
+  // --------------------
+  // -- Setup hardware --
+  // --------------------
+
   // Oled
   Wire.begin();
   display.begin();
 
   // Pump
-  pinMode(PUMP, OUTPUT);
+  pump.begin();
 
-  // Start
-  viewLogoPage();
-  setupConfiguration();
+  // ----------------
+  // -- Start main --
+  // ----------------
+  startMain();
+  if (!configuration.configutated) {
+    setupConfiguration();
+  }
+  viewMainMenu();
 }
 
 void loop() {
-  //encoder.tick();
+  runMain();
 }
