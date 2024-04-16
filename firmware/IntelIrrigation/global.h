@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+  -- global.h --
+  Include declaration of pins and structs.
+*/
+
 //////////
 // Pins //
 //////////
@@ -20,7 +25,7 @@
 /////////////
 
 struct CONFIGURATION {
-  bool autoMode = true;
+  bool autoMode = true, configutated = false;
   uint8_t schedule[3] = { 0, 0, 0 };  // schedule = {days, hours, mins}
-  uint16_t powerValue = 80, mlLiquidValue = 500;
+  uint16_t powerValue = 80, minPowerValue = 30, maxPowerValue = 60, mlLiquidValue = 500;
 };
