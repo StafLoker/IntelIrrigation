@@ -1,13 +1,34 @@
 #pragma once
 
 /*
-  -- pagesManager.h --
-  Include login of pages.
+  -- pageManager.h --
+  Include logic of pages & values.
 */
 
 // -----------
 // -- Pages --
 // -----------
+
+/*
+  --- Pages Enumeration --- 
+
+  Number      Page
+  -----       ----
+    0        Main menu
+    1        Review
+    2        Manual mode
+    3        Settings
+    4        Choose Mode
+    5        Enter Schedule
+    6        Enter Power
+    7        Enter Power Range
+    8        Enter Ml Liquid
+*/
+uint8_t page = 0;
+
+/*
+  All "Accept" or "Back" (not include menus) buttons are activated with selector == 0
+*/
 
 // -- Power pages --
 // Values
@@ -42,27 +63,36 @@
 #define MAX_SELECTOR_MAIN_MENU 2
 
 // -- Settings page --
-#define MAX_SELECTOR_SETTINGS 4
+#define MAX_SELECTOR_SETTINGS_AUTO_MODE 3
+#define MAX_SELECTOR_SETTINGS_AUTO_SCHEDULE 4
 
 
 // ---------------
 // -- Selectors --
 // ---------------
 
+// Pages use: Main Menu, Settings
+int8_t mainSelector = 0;
+// Pages use: others
 int8_t selector = 1;
 
 // ------------
 // -- Values --
 // ------------
 
-uint16_t minPowerValue = 30, maxPowerValue = 60;
+bool animation = false;
 
 // -------------
 // -- Headers --
 // -------------
 
 void setupConfigurationPages();
+void runMainPages();
 // Controls
+void controlMainMenu();
+void controlReview();
+void controlManualMode();
+void controlSettings();
 void controlEnterPower();
 void controlEnterPowerRange();
 void controlEnterMlLiquid();

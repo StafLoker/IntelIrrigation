@@ -1,134 +1,236 @@
 #include "pageManager.h"
 
-void mainMenu() {
-  static uint32_t tmr;
-
-  if (encoder.turn()) {
-    selector += 1 * encoder.dir();
-    if (selector > MAX_SELECTOR_MAIN_MENU) {
-      selector = 0;
-    } else if (selector < 0) {
-      selector = MAX_SELECTOR_MAIN_MENU;
-    }
-  }
-}
-
-void settings() {
-  static uint32_t tmr;
-
-  if (encoder.turn()) {
-    selector += 1 * encoder.dir();
-    if (selector > MAX_SELECTOR_SETTINGS) {
-      selector = 0;
-    } else if (selector < 0) {
-      selector = MAX_SELECTOR_SETTINGS;
-    }
-  }
-}
-
-void manualMode() {
-  static uint32_t tmr;
-  static bool holding = false;
-
-  if (encoder.turn()) {
-    selector = !selector;
-    holding = false;
-  }
-
-  if (encoder.holding()) {
-    holding = true;
-  }
-
-  if (encoder.hold()) {
-    holding = false;
-  }
-}
-
 void setupConfigurationPages() {
   viewEnterPower();
-  for (uint8_t step = 1; step;) {
+  while (!configuration.configutated) {
     if (encoder.tick()) {
       // -- Value controller --
-      switch (step) {
-        case 1:
-          controlEnterPower();
-          break;
-        case 2:
-          controlEnterPowerRange();
-          break;
-        case 3:
-          controlEnterMlLiquid();
-          break;
+      switch (page) {
         case 4:
           controlChooseMode();
           break;
         case 5:
           controlEnterSchedule();
-      }
-
-      // -- Router --
-      if (encoder.hold()) {
-        if (step == 4) {
-          // Mode selection
-          if (!selector) {
-            step = 0;
-            configuration.autoMode = true;
-          } else {
-            step++;
-            configuration.autoMode = false;
-            selector = 1;
-          }
-        } else if (step == 1 && selector == SELECT_RANGE_POWER) {
-          // Button "Range"
-          step++;
-          selector = SELECT_MAX_POWER;
-        } else if (!selector) {
-          // Button "Accept"
-          switch (step) {
-            case 1:
-              step = 3;
-              break;
-            case 2:
-              step++;
-              configuration.powerValue = (minPowerValue + maxPowerValue) / 2;
-              break;
-            case 3:
-              step++;
-              break;
-            case 5: step = 0;
-          }
-          step == 4 ? selector = 0 : selector = 1;
-        }
+          break;
+        case 6:
+          controlEnterPower();
+          break;
+        case 7:
+          controlEnterPowerRange();
+          break;
+        case 8:
+          controlEnterMlLiquid();
       }
 
       // -- Display --
       if (millis() - displayTimer >= DISPLAY_TIMER) {
-        switch (step) {
-          case 1:
-            viewEnterPower();
-            break;
-          case 2:
-            viewEnterPowerRange(minPowerValue, maxPowerValue);
-            break;
-          case 3:
-            viewEnterMlLiquid();
-            break;
+        switch (page) {
           case 4:
             viewChooseMode();
             break;
-          case 5: viewEnterSchedule();
+          case 5:
+            viewEnterSchedule();
+            break;
+          case 6:
+            viewEnterPower();
+            break;
+          case 7:
+            viewEnterPowerRange();
+            break;
+          case 8:
+            viewEnterMlLiquid();
         }
       }
     }
   }
   viewCongratulationsInitialConfiguration();
-  selector = 0;
-  viewMainMenu();
+  selector = 1;
+  page = 0;
+}
+
+void runMainPages() {
+  if (encoder.tick()) {
+    // -- Value controller --
+    switch (page) {
+      case 0:
+        controlMainMenu();
+        break;
+      case 1:
+        controlReview();
+        break;
+      case 2:
+        controlManualMode();
+        break;
+      case 3:
+        controlSettings();
+      case 4:
+        controlChooseMode();
+        break;
+      case 5:
+        controlEnterSchedule();
+        break;
+      case 6:
+        controlEnterPower();
+        break;
+      case 7:
+        controlEnterPowerRange();
+        break;
+      case 8:
+        controlEnterMlLiquid();
+    }
+
+    // -- Display --
+    if (millis() - displayTimer >= DISPLAY_TIMER) {
+      switch (page) {
+        case 0:
+          viewMainMenu();
+          break;
+        case 1:
+          viewReview();
+          break;
+        case 2:
+          viewManualMode(animation);
+          break;
+        case 3:
+          viewSettings();
+          break;
+        case 4:
+          viewChooseMode();
+          break;
+        case 5:
+          viewEnterSchedule();
+          break;
+        case 6:
+          viewEnterPower();
+          break;
+        case 7:
+          viewEnterPowerRange();
+          break;
+        case 8:
+          viewEnterMlLiquid();
+      }
+    }
+  }
 }
 
 // --------------
 // -- Controls --
 // --------------
+
+void controlMainMenu() {
+  if (encoder.turn()) {
+    mainSelector += 1 * encoder.dir();
+    if (mainSelector > MAX_SELECTOR_MAIN_MENU) {
+      mainSelector = 0;
+    } else if (mainSelector < 0) {
+      mainSelector = MAX_SELECTOR_MAIN_MENU;
+    }
+  }
+
+  if (encoder.click()) {
+    switch (mainSelector) {
+      case 0:
+        page = 1;
+        selector = 0;
+        break;
+      case 1:
+        page = 2;
+        selector = 1;
+        break;
+      case 2:
+        page = 3;
+        mainSelector = 0;
+    }
+  }
+}
+
+void controlReview() {
+  static bool autoChangePageReview = false;
+  static uint32_t timer;
+  if (!configuration.autoMode && encoder.turn()) {
+    selector = !selector;
+    autoChangePageReview = false;
+  }
+  if (!configuration.autoMode && encoder.timeout(180000)) {
+    autoChangePageReview = true;
+  }
+  if (autoChangePageReview && millis() - timer >= 3000) {
+    selector = !selector;
+  }
+
+  if (encoder.hold()) {
+    page = 0;
+  }
+}
+
+void controlManualMode() {
+  if (encoder.turn()) {
+    selector = !selector;
+    animation = false;
+  }
+
+  if (selector && encoder.holding()) {
+    pump.putOn();
+    animation = true;
+  }
+
+  if (selector && encoder.hold()) {
+    pump.putOff();
+    animation = false;
+  }
+
+  if (!selector && encoder.click()) {
+    page = 0;
+  }
+}
+
+void controlSettings() {
+  if (encoder.turn()) {
+    mainSelector += 1 * encoder.dir();
+    if (mainSelector > (configuration.autoMode ? MAX_SELECTOR_SETTINGS_AUTO_MODE : MAX_SELECTOR_SETTINGS_AUTO_SCHEDULE)) {
+      mainSelector = 0;
+    } else if (mainSelector < 0) {
+      mainSelector = configuration.autoMode ? MAX_SELECTOR_SETTINGS_AUTO_MODE : MAX_SELECTOR_SETTINGS_AUTO_SCHEDULE;
+    }
+  }
+
+  if (encoder.click()) {
+    if (configuration.autoMode) {
+      switch (mainSelector) {
+        case 0:
+          page = 4;
+          break;
+        case 1:
+          page = 6;
+          break;
+        case 2:
+          page = 8;
+          break;
+        case 3:
+          page = 0;
+          mainSelector = 3;
+      }
+    } else {
+      switch (mainSelector) {
+        case 0:
+          page = 4;
+          break;
+        case 1:
+          page = 5;
+          break;
+        case 2:
+          page = 6;
+          break;
+        case 3:
+          page = 8;
+          break;
+        case 4:
+          page = 0;
+          mainSelector = 3;
+      }
+    }
+  }
+}
 
 void controlEnterPower() {
   if (selector == SELECT_POWER && encoder.turn()) {
@@ -144,16 +246,29 @@ void controlEnterPower() {
       selector = 0;
     }
   }
+
+  if ((!selector || selector == SELECT_RANGE_POWER) && encoder.hold()) {
+    if (!selector && configuration.configutated) {
+      page = 3;
+      selector = 1;
+    } else if (!selector && !configuration.configutated) {
+      page = 8;
+      selector = 1;
+    } else {
+      page = 7;
+      selector = SELECT_MAX_POWER;
+    }
+  }
 }
 
 void controlEnterPowerRange() {
   if (selector && encoder.turn()) {
-    selector == SELECT_MIN_POWER ? minPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir() : maxPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir();
-    if (maxPowerValue > MAX_POWER) {
-      maxPowerValue = 0;
+    selector == SELECT_MIN_POWER ? configuration.minPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir() : configuration.maxPowerValue += (encoder.pressing() ? 10 : 1) * encoder.dir();
+    if (configuration.maxPowerValue > MAX_POWER) {
+      configuration.maxPowerValue = 0;
     }
-    if (minPowerValue > maxPowerValue) {
-      minPowerValue = maxPowerValue;
+    if (configuration.minPowerValue > configuration.maxPowerValue) {
+      configuration.minPowerValue = configuration.maxPowerValue;
     }
   }
 
@@ -162,6 +277,16 @@ void controlEnterPowerRange() {
     if (selector > MAX_SELECTOR_POWER_RANGE) {
       selector = 0;
     }
+  }
+
+  if (!selector && encoder.hold()) {
+    if (configuration.configutated) {
+      page = 3;
+    } else {
+      page = 8;
+    }
+    configuration.powerValue = (configuration.minPowerValue + configuration.maxPowerValue) / 2;
+    selector = 1;
   }
 }
 
@@ -179,11 +304,37 @@ void controlEnterMlLiquid() {
       selector = 0;
     }
   }
+
+  if (!selector && encoder.hold()) {
+    if (configuration.configutated) {
+      page = 3;
+      selector = 1;
+    } else {
+      page = 4;
+    }
+  }
 }
 
 void controlChooseMode() {
   if (encoder.turn()) {
     selector = !selector;
+  }
+
+  if (encoder.hold()) {
+    if (!selector && configuration.configutated) {
+      configuration.autoMode = true;
+      page = 3;
+    } else if (!selector && !configuration.configutated) {
+      configuration.autoMode = true;
+      configuration.configutated = true;
+    } else if (selector && configuration.configutated) {
+      configuration.autoMode = false;
+      page = 3;
+    } else {
+      configuration.autoMode = false;
+      page = 5;
+      selector = 1;
+    }
   }
 }
 
@@ -217,5 +368,14 @@ void controlEnterSchedule() {
     if (selector > MAX_SELECTOR_SCHEDULE) {
       selector = 0;
     }
+  }
+
+  if (!selector && encoder.hold()) {
+    if (configuration.configutated) {
+      page = 3;
+    } else {
+      configuration.configutated = true;
+    }
+    selector = 1;
   }
 }
