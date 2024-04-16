@@ -1,5 +1,25 @@
+#include "controller.h"
+
+void startMain() {
+  configuration.configutated = EepromManager::loadConfiguration();
+  viewLogoPage();
+}
+
 void setupConfiguration() {
+  page = 6;
   setupConfigurationPages();
+  pump.setPower(configuration.powerValue);
+  pump.calculateWorkPeriod(configuration.mlLiquidValue);
+  EepromManager::writeInicialConfiguration();
+}
+
+void runMain() {
+  if (configuration.autoMode) {
+    if (isDryGround()) {
+      pump.doWorkDuringWorkPeriod();
+    }
+  }
+  runMainPages();
 }
 
 bool isDryGround() {
