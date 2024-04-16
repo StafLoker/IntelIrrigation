@@ -6,10 +6,6 @@ Pump::Pump(uint16_t power) {
   this->power = power;
 }
 
-Pump::Pump(uint16_t powerMin, uint16_t powerMax) {
-  this->power = (powerMin + powerMax) / 2;
-}
-
 void Pump::setPower(uint16_t power) {
   this->power = power;
 }
@@ -24,6 +20,10 @@ uint16_t Pump::getPower() const {
 
 uint32_t Pump::getWorkPeriod() const {
   return this->workPeriod;
+}
+
+void Pump::begin() {
+  pinMode(PUMP, OUTPUT);
 }
 
 void Pump::doWorkDuringWorkPeriod() {
