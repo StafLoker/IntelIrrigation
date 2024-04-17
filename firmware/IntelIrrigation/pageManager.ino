@@ -2,7 +2,7 @@
 
 void setupConfigurationPages() {
   viewEnterPower();
-  while (!configuration.configutated) {
+  while (!configuration.configured) {
     if (encoder.tick()) {
       // -- Value controller --
       switch (page) {
@@ -208,7 +208,7 @@ void controlSettings() {
           break;
         case 3:
           page = 0;
-          mainSelector = 3;
+          mainSelector = 2;
       }
     } else {
       switch (mainSelector) {
@@ -226,7 +226,7 @@ void controlSettings() {
           break;
         case 4:
           page = 0;
-          mainSelector = 3;
+          mainSelector = 2;
       }
     }
   }
@@ -248,10 +248,10 @@ void controlEnterPower() {
   }
 
   if ((!selector || selector == SELECT_RANGE_POWER) && encoder.hold()) {
-    if (!selector && configuration.configutated) {
+    if (!selector && configuration.configured) {
       page = 3;
       selector = 1;
-    } else if (!selector && !configuration.configutated) {
+    } else if (!selector && !configuration.configured) {
       page = 8;
       selector = 1;
     } else {
@@ -280,7 +280,7 @@ void controlEnterPowerRange() {
   }
 
   if (!selector && encoder.hold()) {
-    if (configuration.configutated) {
+    if (configuration.configured) {
       page = 3;
     } else {
       page = 8;
@@ -306,7 +306,7 @@ void controlEnterMlLiquid() {
   }
 
   if (!selector && encoder.hold()) {
-    if (configuration.configutated) {
+    if (configuration.configured) {
       page = 3;
       selector = 1;
     } else {
@@ -321,13 +321,13 @@ void controlChooseMode() {
   }
 
   if (encoder.hold()) {
-    if (!selector && configuration.configutated) {
+    if (!selector && configuration.configured) {
       configuration.autoMode = true;
       page = 3;
-    } else if (!selector && !configuration.configutated) {
+    } else if (!selector && !configuration.configured) {
       configuration.autoMode = true;
-      configuration.configutated = true;
-    } else if (selector && configuration.configutated) {
+      configuration.configured = true;
+    } else if (selector && configuration.configured) {
       configuration.autoMode = false;
       page = 3;
     } else {
@@ -371,10 +371,10 @@ void controlEnterSchedule() {
   }
 
   if (!selector && encoder.hold()) {
-    if (configuration.configutated) {
+    if (configuration.configured) {
       page = 3;
     } else {
-      configuration.configutated = true;
+      configuration.configured = true;
     }
     selector = 1;
   }
