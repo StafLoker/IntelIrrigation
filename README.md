@@ -13,6 +13,7 @@
 
 ## Libraries
 
-- U8g2
-- EncButton
-- GyverPower
+- [U8g2](https://github.com/olikraus/u8g2)
+- [EncButton](https://github.com/GyverLibs/EncButton)
+- [GyverPower](https://github.com/GyverLibs/GyverPower)
+- [EEManager](https://github.com/GyverLibs/EEManager)
