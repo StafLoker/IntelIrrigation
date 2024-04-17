@@ -25,7 +25,7 @@
 /////////////
 
 struct CONFIGURATION {
-  bool autoMode = true, configutated = false;
+  bool autoMode = true, configured = false;
   uint8_t schedule[3] = { 0, 0, 0 };  // schedule = {days, hours, mins}
   uint16_t powerValue = 80, minPowerValue = 30, maxPowerValue = 60, mlLiquidValue = 500;
 };

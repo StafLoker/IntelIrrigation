@@ -10,7 +10,7 @@
   Version 1.1.0:
     -
     -
-  
+
   Version 1.0.0:
     -
     -
@@ -28,10 +28,16 @@
 // Library optimisation //
 //////////////////////////
 
+// U8g2lib.h
+
+/*
+  To optimize use library of "/libraries/U8g2"
+*/
+
 // EncButton.h
 
-#define EB_NO_FOR       // отключить поддержку pressFor/holdFor/stepFor и счётчик степов (экономит 2 байта оперативки)
-#define EB_NO_CALLBACK  // отключить обработчик событий attach (экономит 2 байта оперативки)
+#define EB_NO_FOR      // отключить поддержку pressFor/holdFor/stepFor и счётчик степов (экономит 2 байта оперативки)
+#define EB_NO_CALLBACK // отключить обработчик событий attach (экономит 2 байта оперативки)
 
 ///////////////
 // Libraries //
@@ -42,9 +48,9 @@
 #include <Wire.h>
 #include <EEPROM.h>
 // Outside
-#include <U8g2lib.h>     // Version: 2.34.22
-#include <EncButton.h>   // Version: 3.5.4
-#include <GyverPower.h>  // Version: 2.2
+#include <U8g2lib.h>    // Version: 2.34.22
+#include <EncButton.h>  // Version: 3.5.4
+#include <GyverPower.h> // Version: 2.2
 // Personal
 #include "global.h"
 #include "controller.h"
@@ -67,7 +73,8 @@ CONFIGURATION configuration;
 // MAIN //
 //////////
 
-void setup() {
+void setup()
+{
   // --------------------
   // -- Setup hardware --
   // --------------------
@@ -83,12 +90,14 @@ void setup() {
   // -- Start main --
   // ----------------
   startMain();
-  if (!configuration.configutated) {
+  if (!configuration.configured)
+  {
     setupConfiguration();
   }
   viewMainMenu();
 }
 
-void loop() {
+void loop()
+{
   runMain();
 }

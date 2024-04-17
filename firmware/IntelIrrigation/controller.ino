@@ -1,7 +1,7 @@
 #include "controller.h"
 
 void startMain() {
-  configuration.configutated = EepromManager::loadConfiguration();
+  configuration.configured = EepromManager::loadConfiguration();
   viewLogoPage();
 }
 
@@ -10,7 +10,7 @@ void setupConfiguration() {
   setupConfigurationPages();
   pump.setPower(configuration.powerValue);
   pump.calculateWorkPeriod(configuration.mlLiquidValue);
-  EepromManager::writeInicialConfiguration();
+  EepromManager::writeInitialConfiguration();
 }
 
 void runMain() {
