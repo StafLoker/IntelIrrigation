@@ -100,7 +100,7 @@ void runMainPages()
       viewReview();
       break;
     case PAGE_MANUAL_MODE:
-      viewManualMode(animation);
+      viewManualMode();
       break;
     case PAGE_SETTINGS:
       viewSettings();
@@ -190,19 +190,19 @@ void controlManualMode()
   if (encoder.turn())
   {
     selector = !selector;
-    animation = false;
+    animationManualMode = false;
   }
 
   if (selector && encoder.holding())
   {
     pump.putOn();
-    animation = true;
+    animationManualMode = true;
   }
 
   if (selector && encoder.hold())
   {
     pump.putOff();
-    animation = false;
+    animationManualMode = false;
   }
 
   if (!selector && encoder.click())

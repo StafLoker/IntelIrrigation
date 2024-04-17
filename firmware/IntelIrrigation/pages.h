@@ -2,7 +2,7 @@
 
 /*
   -- pages.h --
-  Include grafic of pages, not logic.
+  Include graphic of pages, not logic.
 */
 
 // ----------
@@ -30,7 +30,7 @@ void viewEnterSchedule();
 void viewCongratulationsInitialConfiguration();
 void viewMainMenu();
 void viewReview();
-void viewManualMode(bool);
+void viewManualMode();
 void viewSettings();
 void viewSettingsAutoMode();
 void viewSettingsScheduleMode();

@@ -92,7 +92,7 @@ int8_t selector = 1;
 // -- Values --
 // ------------
 
-bool animation = false;
+bool animationManualMode = false;
 
 // -------------
 // -- Headers --
