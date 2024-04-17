@@ -1,27 +1,46 @@
 #include "global.h"
 
-void startMain() {
-  configuration.configured = EepromManager::loadConfiguration();
+void startMain()
+{
   viewLogoPage();
+  configured = !memory.begin(0, INIT_KEY);
+  if (!configured)
+  {
+    setupConfiguration();
+  }
+  else
+  {
+    viewMainMenu();
+  }
 }
 
-void setupConfiguration() {
+void setupConfiguration()
+{
   page = 6;
   setupConfigurationPages();
   pump.setPower(configuration.powerValue);
   pump.calculateWorkPeriod(configuration.mlLiquidValue);
-  EepromManager::writeInitialConfiguration();
+  memory.update();
 }
 
-void runMain() {
-  if (configuration.autoMode) {
-    if (isDryGround()) {
+void runMain()
+{
+  memory.tick();
+  bool encoderTick = encoder.tick();
+  if (configuration.autoMode)
+  {
+    if (isDryGround())
+    {
       pump.doWorkDuringWorkPeriod();
     }
   }
-  runMainPages();
+  if (encoderTick)
+  {
+    runMainPages();
+  }
 }
 
-bool isDryGround() {
+bool isDryGround()
+{
   return analogRead(SOIL_MOISTURE_SENSOR) > DRY_SIGNAL;
 }

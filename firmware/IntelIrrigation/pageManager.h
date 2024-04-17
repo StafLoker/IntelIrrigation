@@ -10,7 +10,7 @@
 // -----------
 
 /*
-  --- Pages Enumeration --- 
+  --- Pages Enumeration ---
 
   Number      Page
   -----       ----
@@ -65,7 +65,6 @@ uint8_t page = 0;
 // -- Settings page --
 #define MAX_SELECTOR_SETTINGS_AUTO_MODE 3
 #define MAX_SELECTOR_SETTINGS_AUTO_SCHEDULE 4
-
 
 // ---------------
 // -- Selectors --

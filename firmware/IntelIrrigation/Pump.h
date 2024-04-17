@@ -5,10 +5,11 @@
   Include declaration of Pump class to manage water pump.
 */
 
-class Pump {
+class Pump
+{
 private:
-  uint16_t power;       // L/h
-  uint32_t workPeriod;  // ms
+  uint16_t power;      // L/h
+  uint32_t workPeriod; // ms
 
 public:
   Pump();

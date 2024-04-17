@@ -47,11 +47,6 @@ void setup()
   // -- Start main --
   // ----------------
   startMain();
-  if (!configuration.configured)
-  {
-    setupConfiguration();
-  }
-  viewMainMenu();
 }
 
 void loop()
