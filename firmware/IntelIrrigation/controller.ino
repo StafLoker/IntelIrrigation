@@ -1,4 +1,4 @@
-#include "controller.h"
+#include "global.h"
 
 void startMain() {
   configuration.configured = EepromManager::loadConfiguration();

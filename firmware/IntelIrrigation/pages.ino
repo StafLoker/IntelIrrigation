@@ -1,4 +1,4 @@
-#include "pages.h"
+#include "global.h"
 
 void viewLogoPage() {
   display.clearBuffer();

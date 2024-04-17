@@ -1,4 +1,4 @@
-#include "pageManager.h"
+#include "global.h"
 
 void setupConfigurationPages() {
   viewEnterPower();
