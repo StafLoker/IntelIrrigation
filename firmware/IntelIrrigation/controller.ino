@@ -16,7 +16,6 @@ void startMain()
 
 void setupConfiguration()
 {
-  page = 6;
   setupConfigurationPages();
   pump.setPower(configuration.powerValue);
   pump.calculateWorkPeriod(configuration.mlLiquidValue);

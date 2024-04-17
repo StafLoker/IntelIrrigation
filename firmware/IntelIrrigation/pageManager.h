@@ -26,6 +26,16 @@
 */
 uint8_t page = 0;
 
+#define PAGE_MAIN_MENU 0
+#define PAGE_REVIEW 1
+#define PAGE_MANUAL_MODE 2
+#define PAGE_SETTINGS 3
+#define PAGE_CHOOSE_MODE 4
+#define PAGE_ENTER_SCHEDULE 5
+#define PAGE_ENTER_POWER 6
+#define PAGE_ENTER_POWER_RANGE 7
+#define PAGE_ENTER_ML_LIQUID 8
+
 /*
   All "Accept" or "Back" (not include menus) buttons are activated with selector == 0
 */
@@ -61,6 +71,9 @@ uint8_t page = 0;
 
 // -- Main menu page --
 #define MAX_SELECTOR_MAIN_MENU 2
+#define SELECT_REVIEW_MAIN_MENU 0
+#define SELECT_MANUAL_MODE_MAIN_MENU 1
+#define SELECT_SETTINGS_MAIN_MENU 2
 
 // -- Settings page --
 #define MAX_SELECTOR_SETTINGS_AUTO_MODE 3

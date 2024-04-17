@@ -2,6 +2,7 @@
 
 void setupConfigurationPages()
 {
+  page = PAGE_ENTER_POWER;
   viewEnterPower();
   while (!configured)
   {
@@ -10,19 +11,19 @@ void setupConfigurationPages()
       // -- Value controller --
       switch (page)
       {
-      case 4:
+      case PAGE_CHOOSE_MODE:
         controlChooseMode();
         break;
-      case 5:
+      case PAGE_ENTER_SCHEDULE:
         controlEnterSchedule();
         break;
-      case 6:
+      case PAGE_ENTER_POWER:
         controlEnterPower();
         break;
-      case 7:
+      case PAGE_ENTER_POWER_RANGE:
         controlEnterPowerRange();
         break;
-      case 8:
+      case PAGE_ENTER_ML_LIQUID:
         controlEnterMlLiquid();
       }
 
@@ -31,19 +32,19 @@ void setupConfigurationPages()
       {
         switch (page)
         {
-        case 4:
+        case PAGE_CHOOSE_MODE:
           viewChooseMode();
           break;
-        case 5:
+        case PAGE_ENTER_SCHEDULE:
           viewEnterSchedule();
           break;
-        case 6:
+        case PAGE_ENTER_POWER:
           viewEnterPower();
           break;
-        case 7:
+        case PAGE_ENTER_POWER_RANGE:
           viewEnterPowerRange();
           break;
-        case 8:
+        case PAGE_ENTER_ML_LIQUID:
           viewEnterMlLiquid();
         }
       }
@@ -51,7 +52,7 @@ void setupConfigurationPages()
   }
   viewCongratulationsInitialConfiguration();
   selector = 1;
-  page = 0;
+  page = PAGE_MAIN_MENU;
 }
 
 void runMainPages()
@@ -59,30 +60,31 @@ void runMainPages()
   // -- Value controller --
   switch (page)
   {
-  case 0:
+  case PAGE_MAIN_MENU:
     controlMainMenu();
     break;
-  case 1:
+  case PAGE_REVIEW:
     controlReview();
     break;
-  case 2:
+  case PAGE_MANUAL_MODE:
     controlManualMode();
     break;
-  case 3:
+  case PAGE_SETTINGS:
     controlSettings();
-  case 4:
+    break;
+  case PAGE_CHOOSE_MODE:
     controlChooseMode();
     break;
-  case 5:
+  case PAGE_ENTER_SCHEDULE:
     controlEnterSchedule();
     break;
-  case 6:
+  case PAGE_ENTER_POWER:
     controlEnterPower();
     break;
-  case 7:
+  case PAGE_ENTER_POWER_RANGE:
     controlEnterPowerRange();
     break;
-  case 8:
+  case PAGE_ENTER_ML_LIQUID:
     controlEnterMlLiquid();
   }
 
@@ -91,31 +93,31 @@ void runMainPages()
   {
     switch (page)
     {
-    case 0:
+    case PAGE_MAIN_MENU:
       viewMainMenu();
       break;
-    case 1:
+    case PAGE_REVIEW:
       viewReview();
       break;
-    case 2:
+    case PAGE_MANUAL_MODE:
       viewManualMode(animation);
       break;
-    case 3:
+    case PAGE_SETTINGS:
       viewSettings();
       break;
-    case 4:
+    case PAGE_CHOOSE_MODE:
       viewChooseMode();
       break;
-    case 5:
+    case PAGE_ENTER_SCHEDULE:
       viewEnterSchedule();
       break;
-    case 6:
+    case PAGE_ENTER_POWER:
       viewEnterPower();
       break;
-    case 7:
+    case PAGE_ENTER_POWER_RANGE:
       viewEnterPowerRange();
       break;
-    case 8:
+    case PAGE_ENTER_ML_LIQUID:
       viewEnterMlLiquid();
     }
   }
@@ -144,16 +146,16 @@ void controlMainMenu()
   {
     switch (mainSelector)
     {
-    case 0:
-      page = 1;
+    case SELECT_REVIEW_MAIN_MENU:
+      page = PAGE_REVIEW;
       selector = 0;
       break;
-    case 1:
-      page = 2;
+    case SELECT_MANUAL_MODE_MAIN_MENU:
+      page = PAGE_MANUAL_MODE;
       selector = 1;
       break;
-    case 2:
-      page = 3;
+    case SELECT_SETTINGS_MAIN_MENU:
+      page = PAGE_SETTINGS;
       mainSelector = 0;
     }
   }
@@ -179,7 +181,7 @@ void controlReview()
 
   if (encoder.hold())
   {
-    page = 0;
+    page = PAGE_MAIN_MENU;
   }
 }
 
@@ -205,7 +207,7 @@ void controlManualMode()
 
   if (!selector && encoder.click())
   {
-    page = 0;
+    page = PAGE_MAIN_MENU;
   }
 }
 
@@ -231,17 +233,17 @@ void controlSettings()
       switch (mainSelector)
       {
       case 0:
-        page = 4;
+        page = PAGE_CHOOSE_MODE;
         break;
       case 1:
-        page = 6;
+        page = PAGE_ENTER_POWER;
         break;
       case 2:
-        page = 8;
+        page = PAGE_ENTER_ML_LIQUID;
         break;
       case 3:
-        page = 0;
-        mainSelector = 2;
+        page = PAGE_MAIN_MENU;
+        mainSelector = SELECT_SETTINGS_MAIN_MENU;
       }
     }
     else
@@ -249,20 +251,20 @@ void controlSettings()
       switch (mainSelector)
       {
       case 0:
-        page = 4;
+        page = PAGE_CHOOSE_MODE;
         break;
       case 1:
-        page = 5;
+        page = PAGE_ENTER_SCHEDULE;
         break;
       case 2:
-        page = 6;
+        page = PAGE_ENTER_POWER;
         break;
       case 3:
-        page = 8;
+        page = PAGE_ENTER_ML_LIQUID;
         break;
       case 4:
-        page = 0;
-        mainSelector = 2;
+        page = PAGE_MAIN_MENU;
+        mainSelector = SELECT_SETTINGS_MAIN_MENU;
       }
     }
   }
@@ -292,18 +294,18 @@ void controlEnterPower()
   {
     if (!selector && configured)
     {
-      page = 3;
+      page = PAGE_SETTINGS;
       selector = 1;
       memory.update();
     }
     else if (!selector && !configured)
     {
-      page = 8;
+      page = PAGE_ENTER_ML_LIQUID;
       selector = 1;
     }
     else
     {
-      page = 7;
+      page = PAGE_ENTER_POWER_RANGE;
       selector = SELECT_MAX_POWER;
     }
   }
@@ -337,12 +339,12 @@ void controlEnterPowerRange()
   {
     if (configured)
     {
-      page = 3;
+      page = PAGE_SETTINGS;
       memory.update();
     }
     else
     {
-      page = 8;
+      page = PAGE_ENTER_ML_LIQUID;
     }
     configuration.powerValue = (configuration.minPowerValue + configuration.maxPowerValue) / 2;
     selector = 1;
@@ -379,7 +381,7 @@ void controlEnterMlLiquid()
     }
     else
     {
-      page = 4;
+      page = PAGE_CHOOSE_MODE;
     }
   }
 }
@@ -396,7 +398,7 @@ void controlChooseMode()
     if (!selector && configured)
     {
       configuration.autoMode = true;
-      page = 3;
+      page = PAGE_SETTINGS;
       memory.update();
     }
     else if (!selector && !configured)
@@ -407,13 +409,13 @@ void controlChooseMode()
     else if (selector && configured)
     {
       configuration.autoMode = false;
-      page = 3;
+      page = PAGE_SETTINGS;
       memory.update();
     }
     else
     {
       configuration.autoMode = false;
-      page = 5;
+      page = PAGE_ENTER_SCHEDULE;
       selector = 1;
     }
   }
@@ -463,7 +465,7 @@ void controlEnterSchedule()
   {
     if (configured)
     {
-      page = 3;
+      page = PAGE_SETTINGS;
       memory.update();
     }
     else
