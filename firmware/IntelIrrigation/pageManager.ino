@@ -4,7 +4,7 @@ void setupConfigurationPages()
 {
   page = PAGE_ENTER_POWER;
   viewEnterPower();
-  while (!configured)
+  while (!configuration.configured)
   {
     if (encoder.tick())
     {
@@ -163,18 +163,7 @@ void controlMainMenu()
 
 void controlReview()
 {
-  static bool autoChangePageReview = false;
-  static uint32_t timer;
   if (!configuration.autoMode && encoder.turn())
-  {
-    selector = !selector;
-    autoChangePageReview = false;
-  }
-  if (!configuration.autoMode && encoder.timeout(180000))
-  {
-    autoChangePageReview = true;
-  }
-  if (autoChangePageReview && millis() - timer >= 3000)
   {
     selector = !selector;
   }
@@ -292,15 +281,17 @@ void controlEnterPower()
 
   if ((!selector || selector == SELECT_RANGE_POWER) && encoder.hold())
   {
-    if (!selector && configured)
+    if (!selector && configuration.configured)
     {
       page = PAGE_SETTINGS;
       selector = 1;
+      pump.setPower(configuration.powerValue);
       memory.update();
     }
-    else if (!selector && !configured)
+    else if (!selector && !configuration.configured)
     {
       page = PAGE_ENTER_ML_LIQUID;
+      pump.setPower(configuration.powerValue);
       selector = 1;
     }
     else
@@ -337,7 +328,7 @@ void controlEnterPowerRange()
 
   if (!selector && encoder.hold())
   {
-    if (configured)
+    if (configuration.configured)
     {
       page = PAGE_SETTINGS;
       memory.update();
@@ -347,6 +338,7 @@ void controlEnterPowerRange()
       page = PAGE_ENTER_ML_LIQUID;
     }
     configuration.powerValue = (configuration.minPowerValue + configuration.maxPowerValue) / 2;
+    pump.setPower(configuration.powerValue);
     selector = 1;
   }
 }
@@ -373,9 +365,9 @@ void controlEnterMlLiquid()
 
   if (!selector && encoder.hold())
   {
-    if (configured)
+    if (configuration.configured)
     {
-      page = 3;
+      page = PAGE_SETTINGS;
       selector = 1;
       memory.update();
     }
@@ -383,6 +375,7 @@ void controlEnterMlLiquid()
     {
       page = PAGE_CHOOSE_MODE;
     }
+    pump.calculateWorkPeriod(configuration.mlLiquidValue);
   }
 }
 
@@ -395,20 +388,25 @@ void controlChooseMode()
 
   if (encoder.hold())
   {
-    if (!selector && configured)
+    if (!selector && configuration.configured)
     {
       configuration.autoMode = true;
+      scheduleTimer.stop();
       page = PAGE_SETTINGS;
       memory.update();
     }
-    else if (!selector && !configured)
+    else if (!selector && !configuration.configured)
     {
       configuration.autoMode = true;
-      configured = true;
+      configuration.configured = true;
     }
-    else if (selector && configured)
+    else if (selector && configuration.configured)
     {
       configuration.autoMode = false;
+      if (!scheduleTimer.active())
+      {
+        scheduleTimer.resume();
+      }
       page = PAGE_SETTINGS;
       memory.update();
     }
@@ -463,15 +461,19 @@ void controlEnterSchedule()
 
   if (!selector && encoder.hold())
   {
-    if (configured)
+    if (configuration.configured)
     {
       page = PAGE_SETTINGS;
       memory.update();
     }
     else
     {
-      configured = true;
+      configuration.configured = true;
     }
     selector = 1;
+    scheduleTimer.setTime(configuration.schedule[0] * 24 * 60 * 60 * 1000UL +
+                          configuration.schedule[1] * 60 * 60 * 1000UL +
+                          configuration.schedule[2] * 60 * 1000UL);
+    scheduleTimer.start();
   }
 }

@@ -1,41 +1,86 @@
 #include "global.h"
 
+volatile bool sleepAutoMode = false;
+
+void isrButton()
+{
+  if (power.inSleep())
+  {
+    power.wakeUp();
+    if (configuration.autoMode)
+    {
+      sleepAutoMode = false;
+    }
+  }
+}
+
 void startMain()
 {
   viewLogoPage();
-  configured = !memory.begin(0, INIT_KEY);
-  if (!configured)
+  memory.begin(0, INIT_KEY);
+  if (!configuration.configured)
   {
     setupConfiguration();
   }
   else
   {
     viewMainMenu();
+    if(!configuration.autoMode){
+      scheduleTimer.setTime(configuration.schedule[0] * 24 * 60 * 60 * 1000UL +
+                          configuration.schedule[1] * 60 * 60 * 1000UL +
+                          configuration.schedule[2] * 60 * 1000UL);
+      scheduleTimer.start();
+    }
   }
 }
 
 void setupConfiguration()
 {
   setupConfigurationPages();
-  pump.setPower(configuration.powerValue);
-  pump.calculateWorkPeriod(configuration.mlLiquidValue);
   memory.update();
 }
 
 void runMain()
 {
-  memory.tick();
   bool encoderTick = encoder.tick();
-  if (configuration.autoMode)
+  memory.tick();
+  
+  if (pump.isWorking() || configuration.autoMode)
   {
     if (isDryGround())
     {
       pump.doWorkDuringWorkPeriod();
     }
   }
+  else
+  {
+    if (pump.isWorking() || scheduleTimer.tick())
+    {
+      pump.doWorkDuringWorkPeriod();
+    }
+  }
+
   if (encoderTick)
   {
     runMainPages();
+  }
+
+  if (encoder.timeout(TIMER_1_MIN))
+  {
+    display.clearDisplay();
+    if (configuration.autoMode)
+    {
+      sleepAutoMode = true;
+    }
+    else
+    {
+      power.sleepDelay(scheduleTimer.timeLeft());
+    }
+  }
+
+  if (sleepAutoMode)
+  {
+    power.sleep(SLEEP_4096MS);
   }
 }
 
