@@ -32,6 +32,8 @@
 #include <EncButton.h>  // Version: 3.5.4
 #include <GyverPower.h> // Version: 2.2
 #include <EEManager.h>  // Version: 2.0
+#include <TimerMs.h> // Version: 1.2
+
 // Personal
 #include "controller.h"
 #include "pageManager.h"
@@ -45,7 +47,15 @@
 // Encoder
 #define ENCODER_S1 11
 #define ENCODER_S2 12
-#define ENCODER_BUTTON 13
+#define ENCODER_BUTTON 2 // pin to attach || Arduino Nano/Uno -> D2 = 0 | D3 = 1
+
+#if (ENCODER_BUTTON == 2)
+#define ENCODER_BUTTON_INT 0
+
+#elif (ENCODER_BUTTON == 3)
+#define ENCODER_BUTTON_INT 1
+
+#endif
 
 // Water pump
 #define PUMP 7
@@ -57,7 +67,7 @@
 // DEFINEs //
 /////////////
 
-#define INIT_KEY 7
+#define INIT_KEY 2
 
 /////////////
 // Structs //
@@ -65,9 +75,9 @@
 
 struct CONFIGURATION
 {
-  bool autoMode = true;
+  bool autoMode = true, configured = false;
   uint8_t schedule[3] = {0, 0, 0}; // schedule = {days, hours, mins}
-  uint16_t powerValue = 80, minPowerValue = 30, maxPowerValue = 60, mlLiquidValue = 500;
+  uint16_t powerValue = 110, minPowerValue = 100, maxPowerValue = 120, mlLiquidValue = 500;
 };
 
 /////////////
@@ -81,9 +91,3 @@ Pump pump;
 CONFIGURATION configuration;
 
 EEManager memory(configuration);
-
-///////////////
-// Variables //
-///////////////
-
-bool configured;

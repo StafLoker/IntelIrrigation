@@ -17,3 +17,4 @@
 - [EncButton](https://github.com/GyverLibs/EncButton)
 - [GyverPower](https://github.com/GyverLibs/GyverPower)
 - [EEManager](https://github.com/GyverLibs/EEManager)
+- [TimerMs](https://github.com/GyverLibs/TimerMs)
