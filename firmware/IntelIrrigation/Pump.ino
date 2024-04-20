@@ -27,6 +27,11 @@ uint32_t Pump::getWorkPeriod() const
   return this->workPeriod;
 }
 
+bool Pump::isWorking() const
+{
+  return this->working;
+}
+
 void Pump::begin()
 {
   pinMode(PUMP, OUTPUT);
@@ -42,14 +47,20 @@ void Pump::doWorkDuringWorkPeriod()
     flag = false;
     this->putOff();
   }
+  if (!flag)
+  {
+    flag = true;
+  }
 }
 
 void Pump::putOn()
 {
   digitalWrite(PUMP, HIGH);
+  this->working = true;
 }
 
 void Pump::putOff()
 {
   digitalWrite(PUMP, LOW);
+  this->working = false;
 }
