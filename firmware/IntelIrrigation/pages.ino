@@ -5,8 +5,10 @@ void viewLogoPage()
   display.clearBuffer();
 
   display.setFont(u8g2_font_6x12_tr);
-  display.drawStr(49, 30, "Intel");
-  display.drawStr(35, 40, "Irrigation");
+  display.setCursor(49, 30);
+  display.print(F("Intel"));
+  display.setCursor(35, 40);
+  display.print(F("Irrigation"));
 
   display.drawFrame(13, 55, 32, 1);
   display.drawFrame(13, 8, 32, 1);
@@ -24,22 +26,21 @@ void viewLogoPage()
 
 void viewEnterPower()
 {
-  char valueString[4];
-
   display.clearBuffer();
 
   display.setFont(u8g2_font_haxrcorp4089_tr);
-  display.drawStr(49, 10, "Power");
+  display.setCursor(49, 10);
+  display.print(F("Power"));
 
   display.setFont(u8g2_font_5x8_tr);
-  sprintf(valueString, "%u", configuration.powerValue);
-
-  display.drawStr(41, 32, valueString);
+  display.setCursor(41, 32);
+  display.print(configuration.powerValue);
   if (selector == SELECT_POWER)
   {
     display.drawLine(40, 34, 56, 34);
   }
-  display.drawStr(66, 32, "L/H");
+  display.setCursor(66, 32);
+  display.print(F("L/H"));
 
   drawButton(26, 55, "Accept", !selector);
 
@@ -50,16 +51,15 @@ void viewEnterPower()
 
 void viewEnterPowerRange()
 {
-  char minValueString[4], maxValueString[4];
-
   display.clearBuffer();
 
   display.setFont(u8g2_font_haxrcorp4089_tr);
-  display.drawStr(48, 10, "Power");
+  display.setCursor(48, 10);
+  display.print(F("Power"));
 
   display.setFont(u8g2_font_5x8_tr);
-  sprintf(minValueString, "%u", configuration.minPowerValue);
-  display.drawStr(37, 33, minValueString);
+  display.setCursor(37, 33);
+  display.print(configuration.minPowerValue);
   if (selector == SELECT_MIN_POWER)
   {
     display.drawLine(37, 35, 51, 35);
@@ -67,14 +67,15 @@ void viewEnterPowerRange()
 
   display.drawLine(56, 30, 61, 30);
 
-  sprintf(maxValueString, "%u", configuration.maxPowerValue);
-  display.drawStr(67, 33, maxValueString);
+  display.setCursor(67, 33);
+  display.print(configuration.maxPowerValue);
   if (selector == SELECT_MAX_POWER)
   {
     display.drawLine(66, 35, 81, 35);
   }
 
-  display.drawStr(87, 33, "L/H");
+  display.setCursor(87, 33);
+  display.print(F("L/H"));
 
   drawButton(48, 56, "Accept", !selector);
 
@@ -83,18 +84,18 @@ void viewEnterPowerRange()
 
 void viewEnterMlLiquid()
 {
-  char valueString[5];
-
   display.clearBuffer();
 
   display.setFont(u8g2_font_6x10_tr);
-  display.drawStr(71, 33, "mL");
+  display.setCursor(71, 33);
+  display.print(F("mL"));
 
   display.setFont(u8g2_font_5x8_tr);
-  display.drawStr(6, 10, "ml of irrigation liquid");
+  display.setCursor(6, 10);
+  display.print(F("ml of irrigation liquid"));
 
-  sprintf(valueString, "%u", configuration.mlLiquidValue);
-  display.drawStr(46, 33, valueString);
+  display.setCursor(46, 33);
+  display.print(configuration.mlLiquidValue);
   if (selector == SELECT_ML_LIQUID)
   {
     display.drawLine(45, 35, 66, 35);
@@ -113,67 +114,75 @@ void viewChooseMode()
 
   display.setFont(u8g2_font_6x12_tr);
   display.setDrawColor(1);
-  display.drawStr(52, 10, "Mode");
+  display.setCursor(52, 10);
+  display.print(F("Mode"));
 
   if (!selector)
   {
     display.drawRFrame(19, 39, 92, 19, 5);
     display.drawXBMP(22, 41, 15, 16, image_clock_quarters_bits);
-    display.drawStr(45, 52, "Schedule");
+    display.setCursor(45, 52);
+    display.print(F("Schedule"));
 
     display.drawRBox(19, 15, 92, 19, 5);
     display.setDrawColor(2);
     display.drawXBMP(23, 17, 14, 16, image_menu_settings_sliders_square_bits);
-    display.drawStr(45, 28, "Auto");
+    display.setCursor(45, 28);
+    display.print(F("Auto"));
   }
   else
   {
     display.drawRFrame(19, 15, 92, 19, 5);
     display.drawXBMP(23, 17, 14, 16, image_menu_settings_sliders_square_bits);
-    display.drawStr(45, 28, "Auto");
+    display.setCursor(45, 28);
+    display.print(F("Auto"));
 
     display.drawRBox(19, 39, 92, 19, 5);
     display.setDrawColor(2);
     display.drawXBMP(22, 41, 15, 16, image_clock_quarters_bits);
-    display.drawStr(45, 52, "Schedule");
+    display.setCursor(45, 52);
+    display.print(F("Schedule"));
   }
   display.sendBuffer();
 }
 
 void viewEnterSchedule()
 {
-  char daysString[3], hoursString[3], minsString[3];
-
   display.clearBuffer();
 
   display.setFont(u8g2_font_5x8_tr);
-  display.drawStr(87, 32, "min");
+  display.setCursor(87, 32);
+  display.print(F("min"));
   if (selector == SELECT_MINS_SCHEDULE)
   {
     display.drawLine(73, 34, 83, 34);
   }
-  sprintf(minsString, "%u", configuration.schedule[2]);
-  display.drawStr(74, 32, minsString);
 
-  display.drawStr(63, 32, "h");
+  display.setCursor(74, 32);
+  display.print(configuration.schedule[2]);
+
+  display.setCursor(63, 32);
+  display.print(F("h"));
   if (selector == SELECT_HOURS_SCHEDULE)
   {
     display.drawLine(49, 34, 59, 34);
   }
-  sprintf(hoursString, "%u", configuration.schedule[1]);
-  display.drawStr(50, 32, hoursString);
+  display.setCursor(50, 32);
+  display.print(configuration.schedule[1]);
 
-  display.drawStr(39, 32, "d");
+  display.setCursor(39, 32);
+  display.print(F("d"));
   if (selector == SELECT_DAYS_SCHEDULE)
   {
     display.drawLine(25, 34, 35, 34);
   }
-  sprintf(daysString, "%u", configuration.schedule[0]);
-  display.drawStr(26, 32, daysString);
+  display.setCursor(26, 32);
+  display.print(configuration.schedule[0]);
 
   drawButton(48, 57, "Accept", !selector);
 
-  display.drawStr(23, 9, "Irrigation every");
+  display.setCursor(23, 9);
+  display.print(F("Irrigation every"));
 
   display.sendBuffer();
 }
@@ -185,9 +194,12 @@ void viewCongratulationsInitialConfiguration()
   display.drawXBMP(96, 20, 16, 16, image_hand_thumbs_up_bits);
 
   display.setFont(u8g2_font_helvB08_tr);
-  display.drawStr(20, 33, "configured");
-  display.drawStr(13, 22, "Device");
-  display.drawStr(36, 45, "Enjoy !!!");
+  display.setCursor(20, 33);
+  display.print(F("configured"));
+  display.setCursor(13, 22);
+  display.print(F("Device"));
+  display.setCursor(36, 45);
+  display.print(F("Enjoy !!!"));
 
   display.sendBuffer();
 
@@ -201,7 +213,8 @@ void viewMainMenu()
   display.setBitmapMode(1);
 
   display.setFont(u8g2_font_6x10_tr);
-  display.drawStr(50, 9, "Menu");
+  display.setCursor(50, 9);
+  display.print(F("Menu"));
 
   display.setDrawColor(1);
   switch (mainSelector)
@@ -215,13 +228,15 @@ void viewMainMenu()
 
     display.drawRBox(10, 14, 108, 20, 8);
     display.setDrawColor(2);
-    display.drawStr(37, 28, "Review");
+    display.setCursor(37, 28);
+    display.print(F("Review"));
     display.drawXBMP(14, 16, 16, 16, image_plant_bits);
     break;
 
   case SELECT_MANUAL_MODE_MAIN_MENU:
     display.drawRFrame(10, 14, 108, 20, 8);
-    display.drawStr(37, 28, "Review");
+    display.setCursor(37, 28);
+    display.print(F("Review"));
     display.drawXBMP(14, 16, 16, 16, image_plant_bits);
 
     display.drawRFrame(65, 38, 53, 20, 8);
@@ -237,7 +252,8 @@ void viewMainMenu()
     display.drawXBMP(28, 39, 15, 16, image_weather_wind_bits);
 
     display.drawRFrame(10, 14, 108, 20, 8);
-    display.drawStr(37, 28, "Review");
+    display.setCursor(37, 28);
+    display.print(F("Review"));
     display.drawXBMP(14, 16, 16, 16, image_plant_bits);
 
     display.drawRBox(65, 38, 53, 20, 8);
@@ -254,9 +270,12 @@ void viewReview()
 
   display.setFont(u8g2_font_5x8_tr);
 
-  display.drawStr(36, 22, configuration.autoMode ? "Auto" : "Schedule");
+  display.setCursor(36, 22);
+  display.print(configuration.autoMode ? F("Auto") : F("Schedule"));
+
   display.drawLine(6, 23, 29, 23);
-  display.drawStr(7, 22, "Mode:");
+  display.setCursor(7, 22);
+  display.print(F("Mode"));
 
   if (configuration.autoMode || !selector)
   {
@@ -276,8 +295,11 @@ void viewReview()
     display.drawStr(42, 50, "15");
     display.drawStr(34, 50, "d");
     display.drawStr(21, 50, "12");
+
     display.drawLine(25, 38, 100, 38);
-    display.drawStr(26, 36, "Last irrigation");
+
+    display.setCursor(26, 36);
+    display.print(F("Last irrigation"));
   }
   else
   {
@@ -291,12 +313,15 @@ void viewReview()
     display.drawStr(49, 50, "d");
     display.drawStr(36, 50, "31");
     display.drawStr(22, 50, "in");
+
     display.drawLine(25, 38, 100, 38);
-    display.drawStr(26, 36, "Next irrigation");
+    display.setCursor(26, 36);
+    display.print(F("Next irrigation"));
   }
 
   display.setFont(u8g2_font_helvB08_tr);
-  display.drawStr(45, 10, "Review");
+  display.setCursor(45, 10);
+  display.print(F("Review"));
   display.sendBuffer();
 }
 
@@ -337,17 +362,23 @@ void viewManualMode()
     display.drawXBMP(97, 35, 11, 16, image_weather_humidity_bits);
   }
 
-  display.drawStr(7, 45, "irrigation");
-  display.drawStr(26, 35, "to");
+  display.setCursor(7, 45);
+  display.print(F("irrigation"));
+
+  display.setCursor(26, 35);
+  display.print(F("to"));
+
   if (selector)
   {
     display.drawLine(44, 22, 52, 22);
     display.drawLine(8, 22, 16, 22);
   }
-  display.drawStr(21, 25, "Hold");
+  display.setCursor(21, 25);
+  display.print(F("Hold"));
 
   display.setFont(u8g2_font_6x10_tr);
-  display.drawStr(30, 9, "Manual mode");
+  display.setCursor(30, 9);
+  display.print(F("Manual mode"));
 
   display.sendBuffer();
 }
@@ -360,7 +391,8 @@ void viewSettings()
   display.setBitmapMode(1);
 
   display.setFont(u8g2_font_6x10_tr);
-  display.drawStr(39, 9, "Settings");
+  display.setCursor(39, 9);
+  display.print(F("Settings"));
 
   display.setDrawColor(1);
 
