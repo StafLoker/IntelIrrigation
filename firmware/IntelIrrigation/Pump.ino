@@ -2,65 +2,42 @@
 
 Pump::Pump() = default;
 
-Pump::Pump(uint16_t power)
-{
-  this->power = power;
-}
-
-void Pump::setPower(uint16_t power)
-{
-  this->power = power;
-}
-
-void Pump::calculateWorkPeriod(uint16_t mlLiquid)
-{
-  this->workPeriod = (mlLiquid / this->power) * 3600 * 1000;
-}
-
-uint16_t Pump::getPower() const
-{
-  return this->power;
-}
-
-uint32_t Pump::getWorkPeriod() const
-{
-  return this->workPeriod;
-}
-
-bool Pump::isWorking() const
-{
-  return this->working;
-}
-
 void Pump::begin()
 {
   pinMode(PUMP, OUTPUT);
+  this->workingTimer.setTimerMode();
+}
+
+bool Pump::isWorking()
+{
+  return this->workingTimer.active();
+}
+
+void Pump::calculateWorkPeriod(uint16_t power, uint16_t mlLiquid)
+{
+  this->workingTimer.setTime((mlLiquid / power) * 3600 * 1000);
 }
 
 void Pump::doWorkDuringWorkPeriod()
 {
-  static uint32_t timer;
-  static bool flag = true;
-  this->putOn();
-  if (flag && millis() - timer >= this->workPeriod)
+  if (!this->workingTimer.active())
   {
-    flag = false;
-    this->putOff();
+    this->putOn();
+    this->workingTimer.start();
   }
-  if (!flag)
+  
+  if (this->workingTimer.tick())
   {
-    flag = true;
+    this->putOff();
   }
 }
 
 void Pump::putOn()
 {
   digitalWrite(PUMP, HIGH);
-  this->working = true;
 }
 
 void Pump::putOff()
 {
   digitalWrite(PUMP, LOW);
-  this->working = false;
 }
