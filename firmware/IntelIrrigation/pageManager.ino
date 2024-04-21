@@ -285,13 +285,13 @@ void controlEnterPower()
     {
       page = PAGE_SETTINGS;
       selector = 1;
-      pump.setPower(configuration.powerValue);
+      pump.calculateWorkPeriod(configuration.powerValue, configuration.mlLiquidValue);
       memory.update();
     }
     else if (!selector && !configuration.configured)
     {
       page = PAGE_ENTER_ML_LIQUID;
-      pump.setPower(configuration.powerValue);
+      pump.calculateWorkPeriod(configuration.powerValue, configuration.mlLiquidValue);
       selector = 1;
     }
     else
@@ -338,7 +338,7 @@ void controlEnterPowerRange()
       page = PAGE_ENTER_ML_LIQUID;
     }
     configuration.powerValue = (configuration.minPowerValue + configuration.maxPowerValue) / 2;
-    pump.setPower(configuration.powerValue);
+    pump.calculateWorkPeriod(configuration.powerValue, configuration.mlLiquidValue);
     selector = 1;
   }
 }
@@ -375,7 +375,7 @@ void controlEnterMlLiquid()
     {
       page = PAGE_CHOOSE_MODE;
     }
-    pump.calculateWorkPeriod(configuration.mlLiquidValue);
+    pump.calculateWorkPeriod(configuration.powerValue, configuration.mlLiquidValue);
   }
 }
 
