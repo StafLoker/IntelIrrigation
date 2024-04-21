@@ -22,6 +22,12 @@
 // Objects
 TimerMs scheduleTimer;
 
+// ------------
+// -- Values --
+// ------------
+
+volatile bool sleepAutoMode = false;
+
 // -------------
 // -- Headers --
 // -------------

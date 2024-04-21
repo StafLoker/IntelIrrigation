@@ -32,7 +32,7 @@
 #include <EncButton.h>  // Version: 3.5.4
 #include <GyverPower.h> // Version: 2.2
 #include <EEManager.h>  // Version: 2.0
-#include <TimerMs.h> // Version: 1.2
+#include <TimerMs.h>    // Version: 1.2
 
 // Personal
 #include "controller.h"

@@ -205,13 +205,13 @@ void controlSettings()
   if (encoder.turn())
   {
     mainSelector += 1 * encoder.dir();
-    if (mainSelector > (configuration.autoMode ? MAX_SELECTOR_SETTINGS_AUTO_MODE : MAX_SELECTOR_SETTINGS_AUTO_SCHEDULE))
+    if (mainSelector > (configuration.autoMode ? MAX_SELECTOR_SETTINGS_AUTO_MODE : MAX_SELECTOR_SETTINGS_SCHEDULE_MODE))
     {
       mainSelector = 0;
     }
     else if (mainSelector < 0)
     {
-      mainSelector = configuration.autoMode ? MAX_SELECTOR_SETTINGS_AUTO_MODE : MAX_SELECTOR_SETTINGS_AUTO_SCHEDULE;
+      mainSelector = configuration.autoMode ? MAX_SELECTOR_SETTINGS_AUTO_MODE : MAX_SELECTOR_SETTINGS_SCHEDULE_MODE;
     }
   }
 
