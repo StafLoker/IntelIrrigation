@@ -478,7 +478,7 @@ void controlEnterSchedule()
 
 uint32_t convertScheduleToMs()
 {
-  return configuration.schedule.days * 24 * 60 * 60 * 1000UL +
-         configuration.schedule.hours * 60 * 60 * 1000UL +
-         configuration.schedule.mins * 60 * 1000UL;
+  return (uint32_t) (configuration.schedule.days * 24 * 60 * 60 * 1000) +
+         (configuration.schedule.hours * 60 * 60 * 1000) +
+         (configuration.schedule.mins * 60 * 1000);
 }

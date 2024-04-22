@@ -78,7 +78,6 @@ struct SCHEDULE
   uint8_t days, hours, mins;
 };
 
-
 struct CONFIGURATION
 {
   bool autoMode = true, configured = false;
