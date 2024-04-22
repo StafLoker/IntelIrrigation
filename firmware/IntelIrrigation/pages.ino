@@ -275,7 +275,7 @@ void viewReview()
 
   display.drawLine(6, 23, 29, 23);
   display.setCursor(7, 22);
-  display.print(F("Mode"));
+  display.print(F("Mode:"));
 
   if (configuration.autoMode || !selector)
   {
@@ -288,16 +288,25 @@ void viewReview()
       display.drawFilledEllipse(56, 58, 2, 2);
       display.drawEllipse(66, 58, 2, 2);
     }
-    display.drawStr(92, 50, "ago");
-    display.drawStr(74, 50, "min");
-    display.drawStr(62, 50, "34");
-    display.drawStr(54, 50, "h");
-    display.drawStr(42, 50, "15");
-    display.drawStr(34, 50, "d");
-    display.drawStr(21, 50, "12");
+    display.setCursor(92, 50);
+    display.print(F("ago"));
+
+    display.setCursor(74, 50);
+    display.print(F("min"));
+    display.setCursor(62, 50);
+    display.print("59");
+
+    display.setCursor(54, 50);
+    display.print(F("h"));
+    display.setCursor(42, 50);
+    display.print("23");
+
+    display.setCursor(34, 50);
+    display.print(F("d"));
+    display.setCursor(21, 50);
+    display.print("31");
 
     display.drawLine(25, 38, 100, 38);
-
     display.setCursor(26, 36);
     display.print(F("Last irrigation"));
   }
@@ -306,13 +315,25 @@ void viewReview()
     display.drawEllipse(56, 58, 2, 2);
     display.drawFilledEllipse(66, 58, 2, 2);
 
-    display.drawStr(89, 50, "min");
-    display.drawStr(77, 50, "50");
-    display.drawStr(69, 50, "h");
-    display.drawStr(57, 50, "23");
-    display.drawStr(49, 50, "d");
-    display.drawStr(36, 50, "31");
-    display.drawStr(22, 50, "in");
+    uint32_t timeLeft = scheduleTimer.timeLeft();
+
+    display.setCursor(89, 50);
+    display.print(F("min"));
+    display.setCursor(77, 50);
+    display.print((timeLeft % 3600000) / 60000);
+
+    display.setCursor(69, 50);
+    display.print(F("h"));
+    display.setCursor(57, 50);
+    display.print((timeLeft % 86400000) / 3600000);
+
+    display.setCursor(49, 50);
+    display.print(F("d"));
+    display.setCursor(36, 50);
+    display.print(timeLeft / 86400000);
+
+    display.setCursor(22, 50);
+    display.print(F("in"));
 
     display.drawLine(25, 38, 100, 38);
     display.setCursor(26, 36);
@@ -418,7 +439,8 @@ void drawSettingsAutoMode()
     display.drawBox(121, 6, 5, 9);
 
     display.drawRFrame(9, 40, 106, 19, 5);
-    display.drawStr(32, 52, "Change power");
+    display.setCursor(39, 52);
+    display.print(F("Change power"));
     display.drawXBMP(12, 40, 15, 16, image_weather_wind_bits);
 
     display.drawRBox(9, 14, 106, 19, 5);
@@ -435,32 +457,37 @@ void drawSettingsAutoMode()
 
     display.drawRBox(9, 40, 106, 19, 5);
     display.setDrawColor(2);
-    display.drawStr(32, 52, "Change power");
+    display.setCursor(39, 52);
+    display.print(F("Change power"));
     display.drawXBMP(12, 40, 15, 16, image_weather_wind_bits);
     break;
   case SELECT_CHANGE_ML_SETTINGS_AUTO_MODE:
     display.drawBox(121, 27, 5, 9);
 
     display.drawRFrame(9, 14, 106, 19, 5);
-    display.drawStr(32, 26, "Change power");
+    display.setCursor(39, 26);
+    display.print(F("Change power"));
     display.setDrawColor(2);
     display.drawXBMP(12, 14, 15, 16, image_weather_wind_bits);
 
     display.drawRBox(9, 40, 106, 19, 4);
     display.setDrawColor(2);
-    display.drawStr(32, 52, "Change ml");
+    display.setCursor(39, 52);
+    display.print(F("Change ml"));
     display.drawXBMP(14, 41, 11, 16, image_weather_humidity_bits);
     break;
   case SELECT_BACK_SETTINGS_AUTO_MODE:
     display.drawBox(121, 49, 5, 9);
 
     display.drawRFrame(9, 14, 106, 19, 5);
-    display.drawStr(32, 28, "Change ml");
+    display.setCursor(39, 28);
+    display.print(F("Change ml"));
     display.drawXBMP(14, 16, 11, 16, image_weather_humidity_bits);
 
     display.drawRBox(9, 40, 106, 19, 5);
     display.setDrawColor(2);
-    display.drawStr(32, 52, "Back");
+    display.setCursor(39, 52);
+    display.print(F("Back"));
     display.drawXBMP(16, 47, 5, 7, image_arrow_curved_left_down_bits);
   }
 }
@@ -474,26 +501,30 @@ void drawSettingsScheduleMode()
 
     display.drawRFrame(9, 40, 106, 19, 5);
     display.setFont(u8g2_font_5x8_tr);
-    display.drawStr(32, 52, "Change schedule");
+    display.setCursor(32, 52);
+    display.print(F("Change schedule"));
     display.drawXBMP(12, 42, 15, 16, image_clock_quarters_bits);
 
     display.drawRBox(9, 14, 106, 19, 5);
     display.setDrawColor(2);
     display.setFont(u8g2_font_6x10_tr);
-    display.drawStr(32, 27, "Change mode");
+    display.setCursor(32, 27);
+    display.print(F("Change mode"));
     display.drawXBMP(13, 16, 14, 16, image_menu_settings_sliders_square_bits);
     break;
   case SELECT_CHANGE_SCHEDULE_SETTINGS_SCHEDULE_MODE:
     display.drawBox(121, 6, 5, 9);
 
     display.drawRFrame(9, 14, 106, 19, 5);
-    display.drawStr(32, 27, "Change mode");
+    display.setCursor(32, 27);
+    display.print(F("Change mode"));
     display.drawXBMP(13, 16, 14, 16, image_menu_settings_sliders_square_bits);
 
     display.drawRBox(9, 40, 106, 19, 5);
     display.setDrawColor(2);
     display.setFont(u8g2_font_5x8_tr);
-    display.drawStr(32, 52, "Change schedule");
+    display.setCursor(32, 52);
+    display.print(F("Change schedule"));
     display.drawXBMP(12, 42, 15, 16, image_clock_quarters_bits);
     break;
   case SELECT_CHANGE_POWER_SETTINGS_SCHEDULE_MODE:
@@ -501,38 +532,44 @@ void drawSettingsScheduleMode()
 
     display.drawRFrame(9, 14, 106, 19, 5);
     display.setFont(u8g2_font_5x8_tr);
-    display.drawStr(32, 26, "Change schedule");
+    display.setCursor(32, 26);
+    display.print(F("Change schedule"));
     display.drawXBMP(12, 16, 15, 16, image_clock_quarters_bits);
 
     display.drawRBox(9, 40, 106, 19, 5);
     display.setDrawColor(2);
     display.setFont(u8g2_font_6x10_tr);
-    display.drawStr(32, 52, "Change power");
+    display.setCursor(32, 52);
+    display.print(F("Change power"));
     display.drawXBMP(12, 40, 15, 16, image_weather_wind_bits);
     break;
   case SELECT_CHANGE_ML_SETTINGS_SCHEDULE_MODE:
     display.drawBox(121, 35, 5, 9);
 
     display.drawRFrame(9, 14, 106, 19, 5);
-    display.drawStr(32, 26, "Change power");
+    display.setCursor(32, 26);
+    display.print(F("Change power"));
     display.setDrawColor(2);
     display.drawXBMP(12, 14, 15, 16, image_weather_wind_bits);
 
     display.drawRBox(9, 40, 106, 19, 4);
     display.setDrawColor(2);
-    display.drawStr(32, 52, "Change ml");
+    display.setCursor(32, 52);
+    display.print(F("Change ml"));
     display.drawXBMP(14, 41, 11, 16, image_weather_humidity_bits);
     break;
   case SELECT_BACK_SETTINGS_SCHEDULE_MODE:
     display.drawBox(121, 49, 5, 9);
 
     display.drawRFrame(9, 14, 106, 19, 5);
-    display.drawStr(32, 28, "Change ml");
+    display.setCursor(32, 28);
+    display.print(F("Change ml"));
     display.drawXBMP(14, 16, 11, 16, image_weather_humidity_bits);
 
     display.drawRBox(9, 40, 106, 19, 5);
     display.setDrawColor(2);
-    display.drawStr(32, 52, "Back");
+    display.setCursor(32, 52);
+    display.print(F("Back"));
     display.drawXBMP(16, 47, 5, 7, image_arrow_curved_left_down_bits);
   }
 }
