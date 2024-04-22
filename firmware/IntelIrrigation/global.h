@@ -36,10 +36,10 @@
 
 // Personal
 #include "controller.h"
+#include "Pump.h"
 #include "pageManager.h"
 #include "UIComponents.h"
 #include "pages.h"
-#include "Pump.h"
 
 //////////
 // Pins //

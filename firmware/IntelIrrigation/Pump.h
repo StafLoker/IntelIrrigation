@@ -17,7 +17,7 @@ public:
 
   void begin();
 
-  bool isWorking();
+  bool isWorkingDuringWorkPeriod();
 
   /*
     @param power uint16_t

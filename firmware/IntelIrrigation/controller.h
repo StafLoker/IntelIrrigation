@@ -17,7 +17,7 @@
 // -- Timers --
 // ------------
 
-#define TIMER_1_MIN 60000
+#define TIMER_1_MIN 60000 // (ms)
 
 // Objects
 TimerMs scheduleTimer(1000, false, true);

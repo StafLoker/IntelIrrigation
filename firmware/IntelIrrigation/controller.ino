@@ -45,14 +45,14 @@ void runMain()
 
   if (configuration.autoMode)
   {
-    if (pump.isWorking() || isDryGround())
+    if (pump.isWorkingDuringWorkPeriod() || isDryGround())
     {
       pump.doWorkDuringWorkPeriod();
     }
   }
   else
   {
-    if (pump.isWorking() || scheduleTimer.tick())
+    if (pump.isWorkingDuringWorkPeriod() || scheduleTimer.tick())
     {
       pump.doWorkDuringWorkPeriod();
     }

@@ -8,7 +8,7 @@ void Pump::begin()
   this->workingTimer.setTimerMode();
 }
 
-bool Pump::isWorking()
+bool Pump::isWorkingDuringWorkPeriod()
 {
   return this->workingTimer.active();
 }
