@@ -68,16 +68,21 @@
 // DEFINEs //
 /////////////
 
-#define INIT_KEY 2
+#define INIT_KEY 3
 
 /////////////
 // Structs //
 /////////////
+struct SCHEDULE
+{
+  uint8_t days, hours, mins;
+};
+
 
 struct CONFIGURATION
 {
   bool autoMode = true, configured = false;
-  uint8_t schedule[3] = {0, 0, 0}; // schedule = {days, hours, mins}
+  SCHEDULE schedule = {0, 0, 0}; // schedule = {days, hours, mins}
   uint16_t powerValue = 110, minPowerValue = 100, maxPowerValue = 120, mlLiquidValue = 500;
 };
 
