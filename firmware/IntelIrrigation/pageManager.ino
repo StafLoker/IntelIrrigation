@@ -426,27 +426,27 @@ void controlEnterSchedule()
     switch (selector)
     {
     case SELECT_DAYS_SCHEDULE:
-      configuration.schedule[0] += (encoder.pressing() ? 5 : 1) * encoder.dir();
+      configuration.schedule.days += (encoder.pressing() ? 5 : 1) * encoder.dir();
       break;
     case SELECT_HOURS_SCHEDULE:
-      configuration.schedule[1] += (encoder.pressing() ? 5 : 1) * encoder.dir();
+      configuration.schedule.hours += (encoder.pressing() ? 5 : 1) * encoder.dir();
       break;
     case SELECT_MINS_SCHEDULE:
-      configuration.schedule[2] += (encoder.pressing() ? 5 : 1) * encoder.dir();
+      configuration.schedule.mins += (encoder.pressing() ? 5 : 1) * encoder.dir();
     }
-    if (configuration.schedule[0] > MAX_DAYS_SCHEDULE)
+    if (configuration.schedule.days > MAX_DAYS_SCHEDULE)
     {
-      configuration.schedule[0] = 0;
+      configuration.schedule.days = 0;
     }
-    if (configuration.schedule[1] > MAX_HOURS_SCHEDULE)
+    if (configuration.schedule.hours > MAX_HOURS_SCHEDULE)
     {
-      configuration.schedule[1] = 0;
-      configuration.schedule[0]++;
+      configuration.schedule.hours = 0;
+      configuration.schedule.days++;
     }
-    if (configuration.schedule[2] > MAX_MINS_SCHEDULE)
+    if (configuration.schedule.mins > MAX_MINS_SCHEDULE)
     {
-      configuration.schedule[2] = 0;
-      configuration.schedule[1]++;
+      configuration.schedule.mins = 0;
+      configuration.schedule.hours++;
     }
   }
 
@@ -478,7 +478,7 @@ void controlEnterSchedule()
 
 uint32_t convertScheduleToMs()
 {
-  return configuration.schedule[2] * 24 * 60 * 60 * 1000UL +
-         configuration.schedule[1] * 60 * 60 * 1000UL +
-         configuration.schedule[0] * 60 * 1000UL;
+  return configuration.schedule.days * 24 * 60 * 60 * 1000UL +
+         configuration.schedule.hours * 60 * 60 * 1000UL +
+         configuration.schedule.mins * 60 * 1000UL;
 }

@@ -159,7 +159,7 @@ void viewEnterSchedule()
   }
 
   display.setCursor(74, 32);
-  display.print(configuration.schedule[2]);
+  display.print(configuration.schedule.mins);
 
   display.setCursor(63, 32);
   display.print(F("h"));
@@ -168,7 +168,7 @@ void viewEnterSchedule()
     display.drawLine(49, 34, 59, 34);
   }
   display.setCursor(50, 32);
-  display.print(configuration.schedule[1]);
+  display.print(configuration.schedule.hours);
 
   display.setCursor(39, 32);
   display.print(F("d"));
@@ -177,7 +177,7 @@ void viewEnterSchedule()
     display.drawLine(25, 34, 35, 34);
   }
   display.setCursor(26, 32);
-  display.print(configuration.schedule[0]);
+  display.print(configuration.schedule.days);
 
   drawButton(48, 57, "Accept", !selector);
 
