@@ -22,11 +22,10 @@ void startMain()
   }
   else
   {
+    pump.calculateWorkPeriod(configuration.powerValue, configuration.mlLiquidValue);
     if (!configuration.autoMode)
     {
-      scheduleTimer.setTime(configuration.schedule[0] * 24 * 60 * 60 * 1000UL +
-                            configuration.schedule[1] * 60 * 60 * 1000UL +
-                            configuration.schedule[2] * 60 * 1000UL);
+      scheduleTimer.setTime(convertScheduleToMs());
       scheduleTimer.start();
     }
   }
@@ -44,9 +43,9 @@ void runMain()
   bool encoderTick = encoder.tick();
   memory.tick();
 
-  if (pump.isWorking() || configuration.autoMode)
+  if (configuration.autoMode)
   {
-    if (isDryGround())
+    if (pump.isWorking() || isDryGround())
     {
       pump.doWorkDuringWorkPeriod();
     }

@@ -122,3 +122,5 @@ void controlEnterPowerRange();
 void controlEnterMlLiquid();
 void controlChooseMode();
 void controlEnterSchedule();
+//Other
+uint32_t convertScheduleToMs();

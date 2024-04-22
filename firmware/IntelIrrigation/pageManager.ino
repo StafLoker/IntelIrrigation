@@ -405,7 +405,7 @@ void controlChooseMode()
       configuration.autoMode = false;
       if (!scheduleTimer.active())
       {
-        scheduleTimer.resume();
+        scheduleTimer.start();
       }
       page = PAGE_SETTINGS;
       memory.update();
@@ -471,9 +471,14 @@ void controlEnterSchedule()
       configuration.configured = true;
     }
     selector = 1;
-    scheduleTimer.setTime(configuration.schedule[0] * 24 * 60 * 60 * 1000UL +
-                          configuration.schedule[1] * 60 * 60 * 1000UL +
-                          configuration.schedule[2] * 60 * 1000UL);
+    scheduleTimer.setTime(convertScheduleToMs());
     scheduleTimer.start();
   }
+}
+
+uint32_t convertScheduleToMs()
+{
+  return configuration.schedule[2] * 24 * 60 * 60 * 1000UL +
+         configuration.schedule[1] * 60 * 60 * 1000UL +
+         configuration.schedule[0] * 60 * 1000UL;
 }

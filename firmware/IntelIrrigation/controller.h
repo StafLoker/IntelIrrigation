@@ -20,7 +20,7 @@
 #define TIMER_1_MIN 60000
 
 // Objects
-TimerMs scheduleTimer;
+TimerMs scheduleTimer(1000, false, true);
 
 // ------------
 // -- Values --
