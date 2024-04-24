@@ -288,23 +288,26 @@ void viewReview()
       display.drawFilledEllipse(56, 58, 2, 2);
       display.drawEllipse(66, 58, 2, 2);
     }
+
     display.setCursor(92, 50);
     display.print(F("ago"));
+
+    uint32_t lastUseTime = pump.getLastUseTime();
 
     display.setCursor(74, 50);
     display.print(F("min"));
     display.setCursor(62, 50);
-    display.print("59");
+    display.print((lastUseTime % 3600000) / 60000);
 
     display.setCursor(54, 50);
     display.print(F("h"));
     display.setCursor(42, 50);
-    display.print("23");
+    display.print((lastUseTime % 86400000) / 3600000);
 
     display.setCursor(34, 50);
     display.print(F("d"));
     display.setCursor(21, 50);
-    display.print("31");
+    display.print(lastUseTime / 86400000);
 
     display.drawLine(25, 38, 100, 38);
     display.setCursor(26, 36);
@@ -437,9 +440,9 @@ void drawSettingsAutoMode()
   {
   case SELECT_CHANGE_MODE_SETTINGS:
     display.drawBox(121, 6, 5, 9);
-
+    
     display.drawRFrame(9, 40, 106, 19, 5);
-    display.setCursor(39, 52);
+    display.setCursor(32, 52);
     display.print(F("Change power"));
     display.drawXBMP(12, 40, 15, 16, image_weather_wind_bits);
 
@@ -457,7 +460,7 @@ void drawSettingsAutoMode()
 
     display.drawRBox(9, 40, 106, 19, 5);
     display.setDrawColor(2);
-    display.setCursor(39, 52);
+    display.setCursor(32, 52);
     display.print(F("Change power"));
     display.drawXBMP(12, 40, 15, 16, image_weather_wind_bits);
     break;

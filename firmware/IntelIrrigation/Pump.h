@@ -11,6 +11,7 @@ class Pump
 {
 private:
   TimerMs workingTimer;
+  uint32_t lastUseTime = 0;
 
 public:
   Pump();
@@ -18,6 +19,10 @@ public:
   void begin();
 
   bool isWorkingDuringWorkPeriod();
+
+  uint32_t getLastUseTime() const;
+
+  void updateLastUseTime();
 
   /*
     @param power uint16_t

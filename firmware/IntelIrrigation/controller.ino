@@ -42,6 +42,7 @@ void runMain()
 {
   bool encoderTick = encoder.tick();
   memory.tick();
+  pump.updateLastUseTime();
 
   if (configuration.autoMode)
   {
