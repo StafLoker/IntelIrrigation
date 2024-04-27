@@ -37,6 +37,11 @@ void viewSettings();
 void drawSettingsAutoMode();
 void drawSettingsScheduleMode();
 
+// Converts
+uint8_t convertMsToDays(uint32_t);
+uint8_t convertMsToHours(uint32_t);
+uint8_t convertMsToMins(uint32_t);
+
 // -------------
 // -- Bitmaps --
 // -------------

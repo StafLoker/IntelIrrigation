@@ -297,17 +297,17 @@ void viewReview()
     display.setCursor(74, 50);
     display.print(F("min"));
     display.setCursor(62, 50);
-    display.print((lastUseTime % 3600000) / 60000);
+    display.print(convertMsToMins(lastUseTime));
 
     display.setCursor(54, 50);
     display.print(F("h"));
     display.setCursor(42, 50);
-    display.print((lastUseTime % 86400000) / 3600000);
+    display.print(convertMsToHours(lastUseTime));
 
     display.setCursor(34, 50);
     display.print(F("d"));
     display.setCursor(21, 50);
-    display.print(lastUseTime / 86400000);
+    display.print(convertMsToDays(lastUseTime));
 
     display.drawLine(25, 38, 100, 38);
     display.setCursor(26, 36);
@@ -323,17 +323,17 @@ void viewReview()
     display.setCursor(89, 50);
     display.print(F("min"));
     display.setCursor(77, 50);
-    display.print((timeLeft % 3600000) / 60000);
+    display.print(convertMsToMins(timeLeft));
 
     display.setCursor(69, 50);
     display.print(F("h"));
     display.setCursor(57, 50);
-    display.print((timeLeft % 86400000) / 3600000);
+    display.print(convertMsToHours(timeLeft));
 
     display.setCursor(49, 50);
     display.print(F("d"));
     display.setCursor(36, 50);
-    display.print(timeLeft / 86400000);
+    display.print(convertMsToDays(timeLeft));
 
     display.setCursor(22, 50);
     display.print(F("in"));
@@ -577,4 +577,23 @@ void drawSettingsScheduleMode()
     display.setCursor(16, 53);
     display.print(F("<"));
   }
+}
+
+//  --------------
+//  -- Converts --
+//  --------------
+
+uint8_t convertMsToDays(uint32_t timeMs)
+{
+  return timeMs / 86400000; 
+}
+
+uint8_t convertMsToHours(uint32_t timeMs)
+{
+  return (timeMs % 86400000) / 3600000;
+}
+
+uint8_t convertMsToMins(uint32_t timeMs)
+{
+  return (timeMs % 3600000) / 60000;
 }
