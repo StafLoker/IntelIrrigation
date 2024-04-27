@@ -11,7 +11,15 @@
 // DEFINEs //
 /////////////
 
-#define DRY_SIGNAL 230
+/*
+Sensor environment    Readings (Arduino 5V)
+------------------    ---------------------
+      Air                     430
+  Pressed finger              300
+    Dry earth                 350
+    Wet ground                230
+*/
+#define DRY_SIGNAL 350
 
 // ------------
 // -- Timers --

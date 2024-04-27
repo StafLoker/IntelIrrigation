@@ -62,7 +62,7 @@
 #define PUMP 7
 
 // Soil moisture sensor
-#define SOIL_MOISTURE_SENSOR A0
+#define SOIL_MOISTURE_SENSOR 0 // Analog
 
 /////////////
 // DEFINEs //
@@ -81,7 +81,7 @@ struct SCHEDULE
 struct CONFIGURATION
 {
   bool autoMode = true, configured = false;
-  SCHEDULE schedule = {0, 0, 0}; // schedule = {days, hours, mins}
+  SCHEDULE schedule = {0, 0, 0};
   uint16_t powerValue = 110, minPowerValue = 100, maxPowerValue = 120, mlLiquidValue = 500;
 };
 
