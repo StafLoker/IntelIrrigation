@@ -5,10 +5,10 @@
 ## Components
 
 - Arduino Nano
-- Water pump, power 70-120 L/H and DC 3-5V
-- TZT-MOSFET
+- Water pump, power 70-120 L/H and DC 3-5V ([Pump](https://a.aliexpress.com/_EJphP6b))
+- MOSFET Trigger Switch Drive Module
 - Soil moisture sensor
-- SSD1306_128x64 I2C OLED display
+- SSD1306 128x64 I2C OLED display
 - Rotary encoder ([Encoder](https://a.aliexpress.com/_ExFSOl7)).
 
 ## Libraries
