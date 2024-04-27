@@ -1,7 +1,7 @@
 /*
   --> IntelIrrigation <--
-  @author: StafLoker
-  @version: 1.0.0-SNAPSHOT
+  Author: StafLoker
+  Version: 1.0.0-SNAPSHOT
 */
 
 /* --!!! IMPORTANT !!!--
@@ -12,6 +12,7 @@
   ==== Version history ====
 
   = Version 1.1.0 =
+  Futures:
     -
     -
 
@@ -28,6 +29,13 @@
   - In Setting add new screen that allows to set the screen contrast.
   - Before installing the firmware on the board you can specify in which language you prefer the interface. Possible languages: English, Spanish. Default: English.
   - At program start (setup) & activate "hot key" -> factory settings & start configuration
+  - Config review
+*/
+
+/*
+  ==== Optimize ====
+
+  - FLASH memory of settings "strings"
 */
 
 #include "global.h"

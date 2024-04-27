@@ -440,7 +440,7 @@ void drawSettingsAutoMode()
   {
   case SELECT_CHANGE_MODE_SETTINGS:
     display.drawBox(121, 6, 5, 9);
-    
+
     display.drawRFrame(9, 40, 106, 19, 5);
     display.setCursor(32, 52);
     display.print(F("Change power"));
@@ -491,7 +491,8 @@ void drawSettingsAutoMode()
     display.setDrawColor(2);
     display.setCursor(39, 52);
     display.print(F("Back"));
-    display.drawXBMP(16, 47, 5, 7, image_arrow_curved_left_down_bits);
+    display.setCursor(16, 53);
+    display.print(F("<"));
   }
 }
 
@@ -573,6 +574,7 @@ void drawSettingsScheduleMode()
     display.setDrawColor(2);
     display.setCursor(32, 52);
     display.print(F("Back"));
-    display.drawXBMP(16, 47, 5, 7, image_arrow_curved_left_down_bits);
+    display.setCursor(16, 53);
+    display.print(F("<"));
   }
 }
