@@ -1,4 +1,4 @@
-# IntelIrrigation
+# IntelIrrigation `v1.0.0`
 
 "IntelIrrigation" is an Arduino based project. Its goal is to create automatic flower irrigation.
 
