@@ -9,6 +9,7 @@ void isrButton()
     {
       sleepAutoMode = false;
     }
+    viewPage();
   }
 }
 

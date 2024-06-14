@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+  -- UIComponents.h --
+  Include graphic components of pages.
+*/
+
 // -------------
 // -- Headers --
 // -------------

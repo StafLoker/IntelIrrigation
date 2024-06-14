@@ -12,6 +12,7 @@ class Pump
 private:
   TimerMs workingTimer;
   uint32_t lastUseTime = 0;
+  bool isActive;
 
 public:
   Pump();

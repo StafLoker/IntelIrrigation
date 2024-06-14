@@ -1,7 +1,7 @@
 /*
   --> IntelIrrigation <--
   Author: StafLoker
-  Version: 1.0.0-SNAPSHOT
+  Version: 1.0.0
 */
 
 /* --!!! IMPORTANT !!!--
@@ -11,15 +11,18 @@
 /*
   ==== Version history ====
 
-  = Version 1.1.0 =
-  Futures:
-    -
-    -
-
   = Version 1.0.0 =
   Futures:
-    -
-    -
+    - Two modes of operation, "Automatic" and "Schedule".
+      - "Automatic" - according to the sensor readings the watering is switched on.
+      - "Schedule" - set a schedule (example: every 2 days, 5 hours and 30 minutes) according to which the watering is switched on.
+    - Initial configuration of the device during the first start of the device.
+    - The configuration is stored in the EEPROM memory.
+    - Automatic sleep mode (both modes).
+    - Programme menus:
+      - Settings. All parameters set during initial configuration of the device can be changed.
+      - Review. Shows the current operating mode and the elapsed time since the last watering. Also how long it will take for the next watering to take place.
+      - Manual mode. Useful if you need to pump up the liquid to the flower (recommended).
 */
 
 /*
@@ -28,8 +31,9 @@
   - You can indicate the glass/bottle/etc in ml and according to the schedule (Schedule mode ONLY) it calculates approximately how many times or years/months/days/hours the flower can be watered.
   - In Setting add new screen that allows to set the screen contrast.
   - Before installing the firmware on the board you can specify in which language you prefer the interface. Possible languages: English, Spanish. Default: English.
-  - At program start (setup) & activate "hot key" -> factory settings & start configuration
-  - Config review
+  - At program start (setup) & activate "hot key" -> factory settings & start configuration.
+  - Config review.
+  - Calibrate the soil moisture sensor.
 */
 
 /*

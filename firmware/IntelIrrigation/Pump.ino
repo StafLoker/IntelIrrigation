@@ -6,6 +6,7 @@ void Pump::begin()
 {
   pinMode(PUMP, OUTPUT);
   this->workingTimer.setTimerMode();
+  this->isActive = false;
 }
 
 bool Pump::isWorkingDuringWorkPeriod()
@@ -47,11 +48,19 @@ void Pump::doWorkDuringWorkPeriod()
 
 void Pump::putOn()
 {
-  digitalWrite(PUMP, HIGH);
-  this->lastUseTime = millis();
+  if (!isActive)
+  {
+    digitalWrite(PUMP, HIGH);
+    isActive = true;
+    this->lastUseTime = millis();
+  }
 }
 
 void Pump::putOff()
 {
-  digitalWrite(PUMP, LOW);
+  if (isActive)
+  {
+    digitalWrite(PUMP, LOW);
+    isActive = false;
+  }
 }
