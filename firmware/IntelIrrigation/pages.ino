@@ -585,7 +585,7 @@ void drawSettingsScheduleMode()
 
 uint8_t convertMsToDays(uint32_t timeMs)
 {
-  return timeMs / 86400000; 
+  return timeMs / 86400000;
 }
 
 uint8_t convertMsToHours(uint32_t timeMs)

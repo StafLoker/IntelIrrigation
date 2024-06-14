@@ -86,10 +86,10 @@ uint8_t page = 0;
 
 // Schedule
 #define MAX_SELECTOR_SETTINGS_SCHEDULE_MODE 4
-#define SELECT_CHANGE_SCHEDULE_SETTINGS_SCHEDULE_MODE  1
-#define SELECT_CHANGE_POWER_SETTINGS_SCHEDULE_MODE  2
-#define SELECT_CHANGE_ML_SETTINGS_SCHEDULE_MODE  3
-#define SELECT_BACK_SETTINGS_SCHEDULE_MODE  4
+#define SELECT_CHANGE_SCHEDULE_SETTINGS_SCHEDULE_MODE 1
+#define SELECT_CHANGE_POWER_SETTINGS_SCHEDULE_MODE 2
+#define SELECT_CHANGE_ML_SETTINGS_SCHEDULE_MODE 3
+#define SELECT_BACK_SETTINGS_SCHEDULE_MODE 4
 
 // ---------------
 // -- Selectors --
@@ -122,5 +122,5 @@ void controlEnterPowerRange();
 void controlEnterMlLiquid();
 void controlChooseMode();
 void controlEnterSchedule();
-//Other
+// Other
 uint32_t convertScheduleToMs();
