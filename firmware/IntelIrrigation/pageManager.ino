@@ -91,35 +91,40 @@ void runMainPages()
   // -- Display --
   if (millis() - displayTimer >= DISPLAY_TIMER)
   {
-    switch (page)
-    {
-    case PAGE_MAIN_MENU:
-      viewMainMenu();
-      break;
-    case PAGE_REVIEW:
-      viewReview();
-      break;
-    case PAGE_MANUAL_MODE:
-      viewManualMode();
-      break;
-    case PAGE_SETTINGS:
-      viewSettings();
-      break;
-    case PAGE_CHOOSE_MODE:
-      viewChooseMode();
-      break;
-    case PAGE_ENTER_SCHEDULE:
-      viewEnterSchedule();
-      break;
-    case PAGE_ENTER_POWER:
-      viewEnterPower();
-      break;
-    case PAGE_ENTER_POWER_RANGE:
-      viewEnterPowerRange();
-      break;
-    case PAGE_ENTER_ML_LIQUID:
-      viewEnterMlLiquid();
-    }
+    viewPage();
+  }
+}
+
+void viewPage()
+{
+  switch (page)
+  {
+  case PAGE_MAIN_MENU:
+    viewMainMenu();
+    break;
+  case PAGE_REVIEW:
+    viewReview();
+    break;
+  case PAGE_MANUAL_MODE:
+    viewManualMode();
+    break;
+  case PAGE_SETTINGS:
+    viewSettings();
+    break;
+  case PAGE_CHOOSE_MODE:
+    viewChooseMode();
+    break;
+  case PAGE_ENTER_SCHEDULE:
+    viewEnterSchedule();
+    break;
+  case PAGE_ENTER_POWER:
+    viewEnterPower();
+    break;
+  case PAGE_ENTER_POWER_RANGE:
+    viewEnterPowerRange();
+    break;
+  case PAGE_ENTER_ML_LIQUID:
+    viewEnterMlLiquid();
   }
 }
 

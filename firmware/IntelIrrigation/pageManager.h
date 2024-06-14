@@ -112,6 +112,7 @@ bool animationManualMode = false;
 
 void setupConfigurationPages();
 void runMainPages();
+void viewPage();
 // Controls
 void controlMainMenu();
 void controlReview();
